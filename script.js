@@ -161,7 +161,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         // Check if the link is for the current page or another page (shop.html)
-        if (targetId.startsWith('#') && window.location.pathname.includes('flyfihing.html') || 
+        if (targetId.startsWith('#') && window.location.pathname.includes('index.html') || 
             (targetId.startsWith('shop.html#') && window.location.pathname.includes('shop.html'))) {
             const actualId = targetId.includes('#') ? targetId.substring(targetId.indexOf('#')) : targetId;
             const targetElement = document.querySelector(actualId);
