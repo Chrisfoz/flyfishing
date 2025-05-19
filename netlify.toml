@@ -1,0 +1,3 @@
+[build]
+  publish = "."  # Specifies the root directory as the publish directory
+  # No build command is needed for your static site.
