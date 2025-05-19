@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Fly Fishing | Cast Your Adventure</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link to custom stylesheet (can be used for styles not covered by Tailwind or for overrides) -->
+    <link rel="stylesheet" href="style.css"> 
+    <script>
+        // Optional: Configure Tailwind CSS
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#166534', // Dark green for primary actions/accents
+                        'brand-blue': '#0779e4',  // Bright blue for secondary actions/links
+                        'brand-gray': '#374151', // Darker gray for text
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'Arial', 'sans-serif'], // Primary font
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar (optional, for aesthetics) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        html { scroll-behavior: smooth; }
+
+        /* Custom underline for nav links */
+        .nav-link-custom { position: relative; }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white; /* Underline color for active/hover state */
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link-custom:hover::after, .nav-link-custom.active::after {
+            width: 100%;
+        }
+
+        /* Subtle floating animation for decorative elements */
+        .fly-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .form-message.success {
+            background-color: #d1fae5; /* Tailwind green-100 */
+            color: #065f46; /* Tailwind green-700 */
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid #6ee7b7; /* Tailwind green-300 */
+        }
+        .form-message.error {
+            background-color: #fee2e2; /* Tailwind red-100 */
+            color: #991b1b; /* Tailwind red-700 */
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid #fca5a5; /* Tailwind red-300 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-brand-gray font-sans">
+
+    <!-- Header -->
+    <header class="bg-brand-green text-white py-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="flex justify-between items-center">
+                <a href="#hero" class="flex items-center space-x-2">
+                    <i class="fas fa-water text-2xl text-brand-blue"></i>
+                    <h1 class="text-xl md:text-2xl font-bold">Adventure Fly Fishing</h1>
+                </a>
+                
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none" aria-label="Open navigation menu">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                
+                <nav class="hidden md:flex items-center space-x-3 lg:space-x-5" id="desktop-nav">
+                    <a href="#hero" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200 active">Home</a>
+                    <a href="shop.html" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200">Shop</a>
+                    <a href="#about" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200">About</a>
+                    <a href="#gallery" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200">Gallery</a>
+                    <a href="#spots" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200">Spots</a>
+                    <a href="#contact" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200">Sign Up</a>
+                    <a href="shop.html#cart" class="nav-link-custom relative px-3 py-2 text-sm lg:text-base font-medium hover:text-gray-200"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count-main">0</span>)</a>
+                </nav>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-3">
+                <div class="flex flex-col space-y-2 pt-2 pb-3">
+                    <a href="#hero" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700 active">Home</a>
+                    <a href="shop.html" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700">Shop</a>
+                    <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700">About</a>
+                    <a href="#gallery" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700">Gallery</a>
+                    <a href="#spots" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700">Spots</a>
+                    <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700">Sign Up</a>
+                    <a href="shop.html#cart" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-green-700"><i class="fas fa-shopping-cart"></i> Cart (<span id="mobile-cart-count-main">0</span>)</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative bg-cover bg-center min-h-screen flex items-center justify-center text-white" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('public/images/ChatGPT Image May 19, 2025, 03_47_40 PM.png');">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 fly-animation opacity-30"><i class="fas fa-bug fa-2x text-gray-400"></i></div>
+            <div class="absolute top-1/2 right-1/4 fly-animation opacity-30" style="animation-delay: 1s;"><i class="fas fa-bug fa-2x text-gray-400"></i></div>
+            <div class="absolute bottom-1/4 left-1/3 fly-animation opacity-30" style="animation-delay: 2s;"><i class="fas fa-bug fa-2x text-gray-400"></i></div>
+        </div>
+        <div class="text-center z-10 p-8 bg-black bg-opacity-40 rounded-xl shadow-2xl max-w-3xl mx-auto">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">Discover the Thrill of Fly Fishing</h2>
+            <p class="text-lg md:text-xl mb-10">Your next great adventure starts here. Explore pristine waters and master the art of the cast.</p>
+            <a href="#contact" class="px-10 py-4 bg-brand-blue hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300 transform hover:scale-105 text-lg shadow-md hover:shadow-xl">
+                <i class="fas fa-envelope mr-2"></i> Join Our Mailing List
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center mb-12 lg:mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">About Fly Fishing</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">An art, a sport, a profound connection with nature.</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-8 lg:gap-12">
+                <div class="md:w-1/2">
+                    <img src="public/images/ChatGPT Image May 19, 2025, 06_44_20 PM.png" alt="Fly fisherman casting a line" class="rounded-lg shadow-xl w-full transform hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                        Fly fishing is an angling method using a light-weight lure—an artificial fly—to catch fish. The fly is cast with a fly rod, reel, and specialized weighted line. It demands skill and patience but offers uniquely rewarding experiences in stunning natural settings.
+                    </p>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        From tranquil streams to expansive lakes, fly fishing immerses you in serene environments. It's more than the catch; it's reading water, understanding insect life, and the rhythmic cast.
+                    </p>
+                    <a href="#spots" class="mt-8 inline-block px-8 py-3 bg-brand-green hover:bg-green-700 text-white font-medium rounded-lg transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-map-marker-alt mr-2"></i> Explore Fishing Spots
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 lg:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center mb-12 lg:mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Gallery</h2>
+                <p class="mt-4 text-lg text-gray-600">Moments captured from the water.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="public/images/ChatGPT Image May 19, 2025, 06_44_23 PM.png" alt="Fly fishing gear" class="w-full h-72 object-cover">
+                    <div class="p-5 text-center">
+                        <p class="text-gray-800 font-semibold text-lg group-hover:text-brand-blue transition-colors">Essential Gear</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="public/images/ChatGPT Image May 19, 2025, 06_44_27 PM.png" alt="Close up of a fly" class="w-full h-72 object-cover">
+                    <div class="p-5 text-center">
+                        <p class="text-gray-800 font-semibold text-lg group-hover:text-brand-blue transition-colors">Artfully Tied Flies</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="public/images/ChatGPT Image May 19, 2025, 06_44_35 PM.png" alt="Fish caught on a fly" class="w-full h-72 object-cover">
+                    <div class="p-5 text-center">
+                        <p class="text-gray-800 font-semibold text-lg group-hover:text-brand-blue transition-colors">The Rewarding Catch</p>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="public/images/ChatGPT Image May 19, 2025, 03_53_12 PM.png" alt="Scenic fishing spot" class="w-full h-72 object-cover">
+                    <div class="p-5 text-center">
+                        <p class="text-gray-800 font-semibold text-lg group-hover:text-brand-blue transition-colors">Pristine Waters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Spots Section -->
+    <section id="spots" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center mb-12 lg:mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Featured South Australian Spots</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Explore renowned fly fishing locations across South Australia. (More details and map coming soon!)</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group">
+                    <img src="public/images/maninlake.png" alt="Adelaide Hills Stream" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-3 text-brand-green group-hover:text-brand-blue transition-colors">Adelaide Hills Streams</h3>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">Home to Brown and Rainbow Trout. Access often requires landowner permission, but the dry fly action can be insane!</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-1"><i class="fas fa-fish mr-2 text-brand-blue"></i> Brown Trout, Rainbow Trout</div>
+                        <div class="flex items-center text-sm text-gray-500"><i class="fas fa-check-circle mr-2 text-green-500"></i> Best Season: Warmer months (dry fly), Cooler (nymphs)</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group">
+                    <img src="public/images/Yorke.jpeg" alt="Yorke Peninsula Beach" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-3 text-brand-green group-hover:text-brand-blue transition-colors">Yorke Peninsula (Browns Beach)</h3>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">A prime location for targeting Australian Salmon. Popper flies can provide thrilling topwater action for these speedsters.</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-1"><i class="fas fa-fish mr-2 text-brand-blue"></i> Australian Salmon, Flathead</div>
+                        <div class="flex items-center text-sm text-gray-500"><i class="fas fa-check-circle mr-2 text-green-500"></i> Best Season: Autumn, Winter (Flathead)</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group">
+                    <img src="public/images/Coorong.jpeg" alt="Coorong Estuary" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-3 text-brand-green group-hover:text-brand-blue transition-colors">Coorong Estuary</h3>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">A productive system for boaties targeting Mulloway. A true saltwater challenge on the fly.</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-1"><i class="fas fa-fish mr-2 text-brand-blue"></i> Mulloway</div>
+                        <div class="flex items-center text-sm text-gray-500"><i class="fas fa-check-circle mr-2 text-green-500"></i> Best Season: Varies, check local reports</div>
+                    </div>
+                </div>
+            </div>
+             <div class="text-center mt-16">
+                <a href="#" class="px-10 py-4 bg-brand-blue hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300 text-lg shadow-md hover:shadow-lg">
+                    <i class="fas fa-map-signs mr-2"></i> Explore More Spots
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fly Fishing in South Australia Section -->
+    <section id="sa-fishing" class="py-16 lg:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center mb-12 lg:mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Fly Fishing in South Australia</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Discover local species and prime fishing opportunities based on insights from Tackle World Adelaide.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12">
+                <div class="md:order-2 rounded-lg shadow-xl overflow-hidden">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=South+Australia&hl=en&z=7&ie=UTF8&output=embed" 
+                        width="100%" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Map of South Australia">
+                    </iframe>
+                </div>
+                <div class="md:order-1">
+                    <h3 class="text-2xl font-semibold text-brand-green mb-4">Target Species in SA</h3>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        South Australia offers diverse fly fishing targets. While some perceive it as challenging, the thrill of sight fishing, stalking, and outsmarting your quarry is immensely rewarding. Here are some local favorites:
+                    </p>
+                    <ul class="space-y-4 text-gray-700">
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Murray Cod:</strong> Our freshwater icon! Tempted with BIG flies (imitating frogs, rats, yabbies) on 8-10wt, sometimes 10-12wt rods. Try northern rivers and dams.</li>
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Australian Salmon:</strong> Torpedo-sized fighters! Use 8-10wt rods with intermediate lines. Popper flies offer thrilling topwater action on beaches like Browns Beach or Morgan Beach.</li>
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Southern Bluespot Flathead:</strong> Great for beginners on flat beaches (Lower Yorke & Eyre Peninsulas). Use 7-8wt outfits with size 1/0 clousers/deceivers on floating lines. Best in autumn/winter.</li>
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Black Bream:</strong> Found in Adelaide’s estuaries. Cunning and shy, requiring stealth, 4-6lb tippets, and 6-7wt rods. Small baitfish or shrimp patterns work well.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center mt-12">
+                <div class="flex justify-center">
+                    <img src="public/images/SArecfishguide2025.png" alt="SA Recreational Fishing Guide 2025" class="rounded-lg shadow-xl max-w-2xl w-full transform hover:scale-105 transition-transform duration-300">
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-brand-green mb-4">More SA Opportunities</h3>
+                     <ul class="space-y-4 text-gray-700">
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Mulloway:</strong> A true saltwater challenge! Target school fish with 1/0 clousers or big ones with 4/0 garfish flies on 8-10wt outfits. The Coorong (boat) and Onkaparinga River (land) are key spots.</li>
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Stream Trout (Brown & Rainbow):</strong> In Adelaide Hills streams (landowner permission often needed). Use 7-8ft, 3-4wt rods. Small dry flies (size 16-14) in warmer months, nymphs when cooler.</li>
+                        <li><i class="fas fa-fish text-brand-blue mr-2"></i><strong>Yellowfin Whiting:</strong> Fun topwater on flats like Thompsons Beach or Moonta Bay. Use 9ft, 6-8wt outfits with floating lines and popper flies. Crazy Charlies are a good backup.</li>
+                    </ul>
+                    <p class="text-gray-700 mt-6 leading-relaxed">
+                        This information is inspired by local expertise. For more in-depth details, gear recommendations, and the latest conditions:
+                    </p>
+                    <a href="https://tackleworldadelaide.com.au/social/blog/fly-fishing-in-south-australia/" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block px-6 py-3 bg-brand-blue hover:bg-blue-700 text-white font-medium rounded-lg transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-book-open mr-2"></i> Read Full Article on Tackle World
+                    </a>
+                    <a href="#" class="mt-4 inline-block px-6 py-3 bg-brand-blue hover:bg-blue-700 text-white font-medium rounded-lg transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-download mr-2"></i> Download Fishing in SA Guide
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Sign Up Section -->
+    <section id="contact" class="py-16 lg:py-24 bg-brand-green text-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="max-w-2xl mx-auto text-center mb-12 lg:mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold">Stay Connected</h2>
+                <p class="mt-4 text-lg text-gray-200">Sign up for our newsletter for the latest SA fishing tips, trip reports, and exclusive offers.</p>
+            </div>
+            <div class="max-w-xl mx-auto bg-white p-8 lg:p-12 rounded-xl shadow-2xl text-brand-gray">
+                <form id="signupForm">
+                    <div class="mb-6">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" name="name" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition duration-150"
+                               placeholder="e.g., Alex Smith">
+                    </div>
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition duration-150"
+                               placeholder="you@example.com">
+                    </div>
+                    <button type="submit" 
+                            class="w-full px-6 py-4 bg-brand-blue hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 text-lg">
+                        <i class="fas fa-paper-plane mr-2"></i> Subscribe Now
+                    </button>
+                </form>
+                <div id="formMessage" class="mt-6 text-center text-sm"></div> <!-- Messages will be styled by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-4 lg:px-6 text-center">
+            <div class="mb-4">
+                <img src="public/images/Sponsor.jpeg" alt="Sponsor Logo" class="h-16 mx-auto mb-4 rounded">
+            </div>
+            <div class="mb-6">
+                <a href="#hero" class="hover:text-white px-3 py-1">Home</a> |
+                <a href="shop.html" class="hover:text-white px-3 py-1">Shop</a> |
+                <a href="#about" class="hover:text-white px-3 py-1">About</a> |
+                <a href="#gallery" class="hover:text-white px-3 py-1">Gallery</a> |
+                <a href="#spots" class="hover:text-white px-3 py-1">Spots</a> |
+                <a href="#sa-fishing" class="hover:text-white px-3 py-1">SA Fishing</a> |
+                <a href="#contact" class="hover:text-white px-3 py-1">Sign Up</a>
+            </div>
+            <div class="mb-6 text-2xl space-x-6">
+                <a href="#" aria-label="Facebook" class="hover:text-brand-blue transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram" class="hover:text-brand-blue transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter" class="hover:text-brand-blue transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="YouTube" class="hover:text-brand-blue transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-sm">&copy; 2025 Adventure Fly Fishing. All rights reserved.</p>
+            <p class="text-xs mt-2">Insights on SA fishing from Tackle World Adelaide. Designed with <i class="fas fa-heart text-red-500"></i> by Your AI Assistant.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
